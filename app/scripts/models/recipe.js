@@ -24,7 +24,10 @@ var RecipeModel = Backbone.Model.extend({
 
 var RecipeCollection = Backbone.Collection.extend({
   model: RecipeModel,
-  url: 'https://jb3-serve.herokuapp.com/classes/Recipes/'
+  url: 'https://jb3-serve.herokuapp.com/classes/Recipes/',
+  parse: function(data){
+    return data.results;
+  }
 
 });
 

@@ -31,7 +31,7 @@ var AppRouter = Backbone.Router.extend({
       }
 
       if(user && name == 'login'){
-        this.navigate('app/', {trigger: true});
+        this.navigate('recipe_list/', {trigger: true});
         return false;
       }
 

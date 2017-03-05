@@ -15,13 +15,14 @@ function BaseLayout(props) {
                <span className="icon-bar"></span>
                <span className="icon-bar"></span>
              </button>
-             <a className="navbar-brand" href="#">ChefAssist</a>
+             <a className="navbar-brand" href="#">ChefAssist <span className="glyphicon glyphicon-cutlery"></span></a>
            </div>
            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
              <ul className="nav navbar-nav">
-               <li className="active"><a href="#app/">Serving Calculator<span className="sr-only">(current)</span></a></li>
+
                <li><a href="#recipe_list/">Recipe Vault</a></li>
                 <li><a href="#recipe_form/">Recipe Creator</a></li>
+                <li className="active"><a href="#app/">Serving Calculator<span className="sr-only">(current)</span></a></li>
              </ul>
            </div>
         </div>
