@@ -12,7 +12,7 @@ class RecipeListContainer extends React.Component {
     recipeCollection.fetch().then(()=> {
       this.setState({recipeCollection});
       //this.forceUpdate();
-      console.log(recipeCollection,'rC');
+      //console.log(recipeCollection,'rC');
     });
 
     this.state = {
@@ -58,13 +58,22 @@ class RecipeListContainer extends React.Component {
 
 }
 class RecipeList extends React.Component {
+  constructor(props) {
+    super(props);
+  //  var adjustableRecipe = this.state.recipeCollection;
+
+  //  this.state = {adjustableRecipe}
+  }
+  handleAdjustButton(e) {
+    console.log('rCAB', e.target.value);
+  }
 
   render() {
 
     var recipeList = this.props.recipeCollection.map((recipe)=>{
-        console.log(recipe, 'recipe');
+        //console.log(recipe, 'recipe');
       return (
-        <div key={recipe.get('objectId')} className="col-sm-4 col-md-4">
+        <div key={recipe.get('objectId')} className="col-sm-3 col-md-4">
           <div className="thumbnail">
             <img src={recipe.get('img_url')} alt="..."/>
             <div className="caption">
@@ -73,8 +82,9 @@ class RecipeList extends React.Component {
                 <li className="list-group-item list-group-item-info">A dish by: {recipe.get('chef_name')}</li>
                 <li className="list-group-item">Makes: {recipe.get('servings')}&nbsp;{recipe.get('yield_type')}</li>
               </ul>
-              <p>Prep Time: {recipe.get('prep_time')}. Cook Time: {recipe.get('cook_time')}.</p>
-              <p><a href="#" className="btn btn-success" role="button">Adjust Servings</a> <a href="#" className="btn btn-default" role="button">View Recipe</a></p>
+              <p>Prep Time: {recipe.get('prep_time')} minutes. Cook Time: {recipe.get('cook_time')} minutes.</p>
+              <p> Type of Dish: {recipe.get('recipe_type')}</p>
+              <p><a onClick={this.handleAdjustButton} href="#" className="btn btn-success" role="button" value={this.recipeCollection}>Adjust Servings</a> <a href="#" className="btn btn-default" role="button">View Recipe</a></p>
             </div>
           </div>
         </div>
@@ -89,34 +99,6 @@ class RecipeList extends React.Component {
   }
 }
 
-// class RecipeModal extends React.Component {
-//
-//   render() {
-//       var recipeCollection
-//     return (
-//       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-//         <div class="modal-dialog" role="document">
-//           <div class="modal-content">
-//             <div class="modal-header">
-//               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-//               <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-//             </div>
-//             <div class="modal-body">
-//                 ...
-//             </div>
-//             <div class="modal-footer">
-//               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-//               <button type="button" class="btn btn-primary">Save changes</button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//
-//     )
-//
-//   }
-// }
-//onClick={(e)=>{e.preventDefault(); this.getMultiplier()}}
 
 module.exports = {
   RecipeListContainer

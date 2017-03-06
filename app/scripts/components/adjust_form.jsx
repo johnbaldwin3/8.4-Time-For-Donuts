@@ -26,12 +26,8 @@ class AdjustRecipeContainer extends React.Component {
   }
   multiplyServingSize(data) {
     var servingMultiplier = data.serving;
-    //console.log('servingMultiplier', servingMultiplier);
     var recipeServingSize = this.state.recipeModel.get('servings');
-    //console.log('servings', this.state.recipeModel.get('servings'));
-
     var adjustMultiplier = servingMultiplier / recipeServingSize ;
-    //console.log('adMult', adjustMultiplier);
 
     this.setState({servingAdjust: adjustMultiplier});
 

@@ -19,17 +19,9 @@ class RecipeFormContainer extends React.Component {
     }
   }
   addNewRecipeToCollection(data) {
-    console.log('subData', data);
-    // this.state.recipeCollection.set({title: data.title, servings: data.servings, public: data.public, recipe_type: data.recipe_type, prep_time: data.prep_time, cook_time: data.cook_time, cook_temp: data.cook_temp, yield_amount: data.yield_amount, yield_type: data.yield_type, faren: data.faren, img_url: data.img_url, chef_name: data.chef_name});
-
     this.state.recipeCollection.create(data, {success: ()=> {
       this.setState({recipeCollection: this.state.recipeCollection});
     }});
-
-    console.log('rM', this.state);
-
-
-
 
   }
   render() {
@@ -124,7 +116,7 @@ class RecipeForm extends React.Component {
   }
   handleRecipeType(e) {
     var recipeType = e.target.value;
-    //console.log('recipeType', recipeType);
+    //console.log('recipeType', typeof recipeType);
     this.setState({recipe_type: recipeType });
   }
   handlePrepTime(e) {
@@ -154,13 +146,14 @@ class RecipeForm extends React.Component {
   }
   handleYieldType(e) {
     var yieldType = e.target.value;
-    console.log('yieldType', yieldType);
+    //console.log('yieldType', yieldType);
     this.setState({yield_type: yieldType });
   }
   handleSubmitButton(e) {
     e.preventDefault();
-    console.log('clickers');
+    //console.log('clickers');
     this.props.addNewRecipeToCollection(this.state);
+    this.state = {}
   }
 
   render() {
@@ -191,33 +184,33 @@ class RecipeForm extends React.Component {
             </label>
           </div>
         </div>
-
+          <hr noshade/>
       <div className="row">
         <div className="form-group">
           <div className="col-sm-2">
             <select onChange={this.handleRecipeType} className="" title="Recipe Type..." data-width="120px">
-              <option value="breakfast">Breakfast</option>
+              <option value="breakfast" defaultValue>Breakfast</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
               <option value="dessert">Dessert</option>
             </select>
           </div>
           <div className="col-sm-2">
-            <input onChange={this.handlePrepTime} type="number" className="form-control" name="prep_time" id="prep_time" placeholder="Prep Time"/>
+            <input onChange={this.handlePrepTime} type="number" className="form-control" name="prep_time" id="prep_time" placeholder="Prep Time (mins)"/>
           </div>
           <div className="col-sm-2">
-            <input onChange={this.handleCookTime} type="number" className="form-control" name="cook_time" id="cook_time" placeholder="Cook Time"/>
+            <input onChange={this.handleCookTime} type="number" className="form-control" name="cook_time" id="cook_time" placeholder="Cook Time (mins)"/>
           </div>
           <div className="col-sm-2">
             <input onChange={this.handleCookTemp} type="number" className="form-control" name="cook_time" id="cook_temp" placeholder="Cook Temp"/>
           </div>
           <select onChange={this.handleFOrC} className="" title="F" data-width="auto">
-            <option value="true">Farenheit</option>
+            <option value="true" defaultValue>Farenheit</option>
             <option value="false">Celsius</option>
           </select>
         </div>
       </div>
-
+      <hr noshade/>
       <div className="row">
         <div className="form-group">
           <label htmlFor="servings" className="col-sm-2 control-label">This Recipe Will Make...</label>
@@ -229,12 +222,12 @@ class RecipeForm extends React.Component {
           </div>
         </div>
       </div>
-
+      <hr noshade/>
       <IngredientInputForm />
-
+      <hr noshade/>
         <div className="form-group">
-          <div className="col-sm-offset-2 col-sm-10">
-            <button onClick={this.handleSubmitButton} type="submit" className="btn btn-default">Save This Recipe~</button>
+          <div className="col-sm-2">
+            <button onClick={this.handleSubmitButton} type="submit" className="btn btn-primary">Save This Recipe~</button>
           </div>
         </div>
       </form>
@@ -249,6 +242,8 @@ class IngredientInputForm extends React.Component {
     var ingredientCollection = new models.IngredientCollection();
     this.handleIngredientQauntity = this.handleIngredientQauntity.bind(this);
     this.handleNewIngredient = this.handleNewIngredient.bind(this);
+    this.handleIngredientName = this.handleIngredientName.bind(this);
+    this.handleIngredientUnit = this.handleIngredientUnit.bind(this);
 
     this.state = {
       ingredientCollection,
@@ -258,21 +253,28 @@ class IngredientInputForm extends React.Component {
   handleIngredientQauntity(e) {
     var ingredQty = e.target.value;
     console.log('ingredQty', ingredQty);
-    this.setState({qty: ingredQty });
+    this.state.newIngredientRow.set({qty: ingredQty});
+    console.log(this.state.newIngredientRow);
   }
-  handleIngredientQauntity(e) {
-    var ingredQty = e.target.value;
-    console.log('ingredQty', ingredQty);
-    this.setState({qty: ingredQty });
+  handleIngredientUnit(e) {
+    var ingredUnit = e.target.value;
+    console.log('ingredUnit', ingredUnit);
+    this.state.newIngredientRow.set({units: ingredUnit});
+    console.log(this.state.newIngredientRow);
+  }
+  handleIngredientName(e) {
+    var ingredName = e.target.value;
+    console.log('ingredName', ingredName);
+    this.state.newIngredientRow.set({name: ingredName});
   }
 
   handleNewIngredient(e) {
     e.preventDefault();
-    console.log("clicked");
+    //console.log("clicked");
     var ingredientCollection = this.state.ingredientCollection;
     ingredientCollection.add(this.state.newIngredientRow.clone());
     this.setState({ingredientCollection: ingredientCollection});
-
+    console.log('INGCOLLECT', this.state.ingredientCollection );
 
   }
 
@@ -286,18 +288,18 @@ class IngredientInputForm extends React.Component {
                 <div className="col-sm-2">
                   <input onChange={this.handleIngredientQauntity} type="number" className="form-control" name="ingredient_qty"  placeholder="Amount"/>
                 </div>
-                <div className="col-sm-3">
-                  <select className="" title="Units" data-width="120px">
-                    <option value="cups">Cup(s)</option>
+                <div className="col-sm-2">
+                  <select onChange={this.handleIngredientUnit} className="" title="Units" data-width="120px">
+                    <option value="cups" defaultValue>Cup(s)</option>
                     <option value="tblsp">Tablespoon(s)</option>
                     <option value="tsp">Teaspoon(s)</option>
                     <option value="lbs">Pounds</option>
                     <option value="each">Qty</option>
                   </select>
                 </div>
-                <div className="col-sm-5">
+                <div className="col-sm-8">
                   <div className="input-group">
-                    <input type="text" className="form-control" name="ingredient_input"  placeholder="Ingredient Name..."/>
+                    <input onChange={this.handleIngredientName} type="text" className="form-control" name="ingredient_input"  placeholder="Ingredient Name..."/>
                       <span className="input-group-btn">
                         <button onClick={this.handleNewIngredient} className="btn btn-success" type="button"><span className="glyphicon glyphicon-plus"></span>
 
@@ -327,12 +329,13 @@ class NewIngredientListAddRow extends React.Component {
   }
   componentWillReceiveProps(nextProps){
     this.setState({ingredientCollection: this.props.ingredientCollection})
-    console.log(this.state, 'cWRP');
+    //console.log(this.state, 'cWRP');
   }
   render() {
       var newIngredientRow = this.state.ingredientCollection.map(ingred => {
         return (
           <div key={ingred.cid} className="row">
+            <hr noshade/>
             <div className="col-sm-2">
               <input onChange={this.handleIngredientQauntity} type="number" className="form-control" name="ingredient_qty"  placeholder="Amount"/>
             </div>
@@ -352,6 +355,7 @@ class NewIngredientListAddRow extends React.Component {
                     <button onClick={this.props.handleNewIngredient} className="btn btn-success" type="button"><span className="glyphicon glyphicon-plus"></span></button></span>
               </div>
             </div>
+            <hr noshade/>
           </div>
     );
   })
