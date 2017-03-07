@@ -13,7 +13,7 @@ class LoginContainer extends React.Component {
   login(credentials){
     console.log('logcreds', credentials);
     User.login(credentials, function(user){
-      Backbone.history.navigate('app/', {trigger: true});
+      Backbone.history.navigate('recipe_list/', {trigger: true});
     });
   }
   createAccount(credentials){
@@ -22,7 +22,7 @@ class LoginContainer extends React.Component {
     // var user = new User(credentials);
     // user.save().then(function(data){
     //   localStorage.setItem('user', JSON.stringify(data));
-      Backbone.history.navigate('app/', {trigger: true});
+      Backbone.history.navigate('recipe_list/', {trigger: true});
     //});
   }
   render(){

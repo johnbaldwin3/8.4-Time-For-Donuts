@@ -9,24 +9,27 @@ class AdjustRecipeContainer extends React.Component {
   constructor(props) {
     super(props);
     var recipeModel = new models.RecipeModel();
+    var recipeCollection = new models.RecipeCollection();
+    var currentRecipe = new models.RecipeModel();
 
-    recipeModel.set({title: 'PBJ', servings: 1});
-    recipeModel.get('ingredients').add([
-        {qty: 2, units: 'slices', name: 'bread'},
-        {qty: .25, units: 'cups', name: 'jelly'},
-        {qty: .25, units: 'cups', name: 'peanut-butter'}
-    ]);
+    console.log('tpi', this.props.id);
+    recipeCollection.fetch().then(()=> {
+      currentRecipe = recipeCollection.findWhere({objectId: this.props.id});
+      this.setState({currentRecipe, recipeCollection});
+
+    });
 
     this.multiplyServingSize = this.multiplyServingSize.bind(this);
     var servingAdjust = 1;
     this.state = {
-      recipeModel,
-      servingAdjust
+      servingAdjust,
+      currentRecipe,
+      recipeCollection
     }
   }
   multiplyServingSize(data) {
     var servingMultiplier = data.serving;
-    var recipeServingSize = this.state.recipeModel.get('servings');
+    var recipeServingSize = this.state.currentRecipe.get('servings');
     var adjustMultiplier = servingMultiplier / recipeServingSize ;
 
     this.setState({servingAdjust: adjustMultiplier});
@@ -43,7 +46,7 @@ class AdjustRecipeContainer extends React.Component {
               <ServingAdjusterForm  multiplyServingSize = {this.multiplyServingSize}/>
               <IngredientsChecklist
                 servingAdjust = {this.state.servingAdjust}
-                recipeModel = {this.state.recipeModel}/>
+                currentModel = {this.state.currentRecipe}/>
 
           </div>
         </div>
@@ -102,7 +105,8 @@ class IngredientsChecklist extends React.Component {
     //console.log('sa', this.props.servingAdjust);
   }
   render() {
-    var recipeJSON = this.props.recipeModel.toJSON();
+    var recipeJSON = this.props.currentModel.toJSON();
+    console.log("recpJS", recipeJSON);
     var ingredientList = recipeJSON.ingredients.map((ingredients) =>{
       return (
         <form>
@@ -121,7 +125,7 @@ class IngredientsChecklist extends React.Component {
 
     return(
       <div className="form-group ingredients-checklist">
-        <h3>Recipe: {this.props.recipeModel.get('title')}</h3>
+        <h3>Recipe: {this.props.currentModel.get('title')}</h3>
           {ingredientList}
 
       </div>

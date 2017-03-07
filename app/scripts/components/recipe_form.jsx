@@ -74,6 +74,7 @@ class RecipeForm extends React.Component {
     this.handleYieldAmount = this.handleYieldAmount.bind(this);
     this.handleYieldType = this.handleYieldType.bind(this);
     this.handleSubmitButton = this.handleSubmitButton.bind(this);
+    this.handleNewIngredients = this.handleNewIngredients.bind(this);
 
     this.state = {
       img_url: '',
@@ -87,9 +88,6 @@ class RecipeForm extends React.Component {
       faren: true,
       yield_amount: 1,
       yield_type: '',
-
-
-
 
     }
   }
@@ -149,11 +147,14 @@ class RecipeForm extends React.Component {
     //console.log('yieldType', yieldType);
     this.setState({yield_type: yieldType });
   }
+  handleNewIngredients(model) {
+    console.log('model',model);
+  }
   handleSubmitButton(e) {
     e.preventDefault();
     //console.log('clickers');
     this.props.addNewRecipeToCollection(this.state);
-    this.state = {}
+    //this.state = {}
   }
 
   render() {
@@ -223,7 +224,7 @@ class RecipeForm extends React.Component {
         </div>
       </div>
       <hr noshade/>
-      <IngredientInputForm />
+      <IngredientInputForm handleNewIngredients={this.props.handleNewIngredients} />
       <hr noshade/>
         <div className="form-group">
           <div className="col-sm-2">
@@ -244,45 +245,62 @@ class IngredientInputForm extends React.Component {
     this.handleNewIngredient = this.handleNewIngredient.bind(this);
     this.handleIngredientName = this.handleIngredientName.bind(this);
     this.handleIngredientUnit = this.handleIngredientUnit.bind(this);
-
+    this.handleNewIngredients = this.handleNewIngredients.bind(this);
     this.state = {
       ingredientCollection,
-      newIngredientRow: new models.Ingredient()
+      newIngredientRow: new models.Ingredient(),
+      name: '',
+      qty: 1,
+      units: 'cups'
     }
   }
   handleIngredientQauntity(e) {
     var ingredQty = e.target.value;
-    console.log('ingredQty', ingredQty);
+    //console.log('ingredQty', ingredQty);
     this.state.newIngredientRow.set({qty: ingredQty});
-    console.log(this.state.newIngredientRow);
+    //console.log(this.state.newIngredientRow);
   }
   handleIngredientUnit(e) {
     var ingredUnit = e.target.value;
-    console.log('ingredUnit', ingredUnit);
+    //console.log('ingredUnit', ingredUnit);
     this.state.newIngredientRow.set({units: ingredUnit});
-    console.log(this.state.newIngredientRow);
+    //console.log(this.state.newIngredientRow);
   }
   handleIngredientName(e) {
     var ingredName = e.target.value;
-    console.log('ingredName', ingredName);
+    //console.log('ingredName', ingredName);
     this.state.newIngredientRow.set({name: ingredName});
+  }
+  handleNewIngredients(e) {
+    e.preventDefault();
+    this.props.handleNewIngredients({
+    name: this.state.name, qty: this.state.qty, units: this.state.units
+  });
   }
 
   handleNewIngredient(e) {
     e.preventDefault();
-    //console.log("clicked");
     var ingredientCollection = this.state.ingredientCollection;
     ingredientCollection.add(this.state.newIngredientRow.clone());
     this.setState({ingredientCollection: ingredientCollection});
-    console.log('INGCOLLECT', this.state.ingredientCollection );
-
+    handleNewIngredients();
+    //console.log('INGCOLLECT', this.state.ingredientCollection );
+    //return ingredientCollection;
   }
 
   render() {
-
-
+    var ingredients = this.state.ingredientCollection.map((ingredient)=> {
+    return (
+      <li key={ingredient.cid} className="row list-group-item">
+          <h4><span className="glyphicon glyphicon-ok"></span>&nbsp;&nbsp; {ingredient.get('qty')}&nbsp;
+          {ingredient.get('units')}&nbsp;
+          {ingredient.get('name')}&nbsp;</h4>
+      </li>
+      )
+    });
       return (
           <div>
+
             <div className="row">
               <div className="form-group ">
                 <div className="col-sm-2">
@@ -309,65 +327,11 @@ class IngredientInputForm extends React.Component {
                 </div>
               </div>
             </div>
-          <NewIngredientListAddRow handleNewIngredient={this.handleNewIngredient} ingredientCollection={this.state.ingredientCollection} />
+            <ul className="list-group">{ingredients}</ul>
         </div>
-
           )
-
         }
-
     }
-
-class NewIngredientListAddRow extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ingredientCollection: this.props.ingredientCollection
-    }
-
-  }
-  componentWillReceiveProps(nextProps){
-    this.setState({ingredientCollection: this.props.ingredientCollection})
-    //console.log(this.state, 'cWRP');
-  }
-  render() {
-      var newIngredientRow = this.state.ingredientCollection.map(ingred => {
-        return (
-          <div key={ingred.cid} className="row">
-            <hr noshade/>
-            <div className="col-sm-2">
-              <input onChange={this.handleIngredientQauntity} type="number" className="form-control" name="ingredient_qty"  placeholder="Amount"/>
-            </div>
-            <div className="col-sm-2">
-              <select className="" title="Units" data-width="120px">
-                <option value="cups">Cup(s)</option>
-                <option value="tblsp">Tablespoon(s)</option>
-                <option value="tsp">Teaspoon(s)</option>
-                <option value="lbs">Pounds</option>
-                <option value="each">Qty</option>
-              </select>
-            </div>
-            <div className="col-sm-8">
-              <div className="input-group">
-                <input type="text" className="form-control" name="ingredient_input"  placeholder="Ingredient Name..."/>
-                  <span className="input-group-btn">
-                    <button onClick={this.props.handleNewIngredient} className="btn btn-success" type="button"><span className="glyphicon glyphicon-plus"></span></button></span>
-              </div>
-            </div>
-            <hr noshade/>
-          </div>
-    );
-  })
-
-  return (
-    <div className="row">
-      {newIngredientRow}
-    </div>
-  )
-}
-
-}
 
 module.exports = {
   RecipeFormContainer

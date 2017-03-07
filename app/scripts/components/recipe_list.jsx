@@ -9,14 +9,18 @@ class RecipeListContainer extends React.Component {
   constructor(props) {
     super(props);
     var recipeCollection = new models.RecipeCollection();
+    //var currentRecipe = new models.RecipeModel();
+
     recipeCollection.fetch().then(()=> {
+
       this.setState({recipeCollection});
       //this.forceUpdate();
       //console.log(recipeCollection,'rC');
     });
 
     this.state = {
-      recipeCollection
+      recipeCollection,
+      //id: this.props.id
 
     }
   }
@@ -62,7 +66,7 @@ class RecipeList extends React.Component {
     super(props);
   //  var adjustableRecipe = this.state.recipeCollection;
 
-  //  this.state = {adjustableRecipe}
+  this.state = {id: this.props.id}
   }
   handleAdjustButton(e) {
     console.log('rCAB', e.target.value);
@@ -84,7 +88,7 @@ class RecipeList extends React.Component {
               </ul>
               <p>Prep Time: {recipe.get('prep_time')} minutes. Cook Time: {recipe.get('cook_time')} minutes.</p>
               <p> Type of Dish: {recipe.get('recipe_type')}</p>
-              <p><a onClick={this.handleAdjustButton} href="#" className="btn btn-success" role="button" value={this.recipeCollection}>Adjust Servings</a> <a href="#" className="btn btn-default" role="button">View Recipe</a></p>
+              <p><a href={"#app/" + recipe.get('objectId')} className="btn btn-success" role="button" value={recipe.get('objectId')}>Adjust Servings</a> <a href="#" className="btn btn-default" role="button">View Recipe</a></p>
             </div>
           </div>
         </div>
