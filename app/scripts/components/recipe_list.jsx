@@ -75,7 +75,7 @@ class RecipeList extends React.Component {
   render() {
 
     var recipeList = this.props.recipeCollection.map((recipe)=>{
-        //console.log(recipe, 'recipe');
+        console.log(recipe, 'recipe');
       return (
         <div key={recipe.get('objectId')} className="col-sm-3 col-md-4">
           <div className="thumbnail">

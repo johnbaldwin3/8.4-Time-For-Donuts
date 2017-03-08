@@ -1,5 +1,8 @@
 var React = require('react');
 
+function isActiveClass() {
+
+}
 
 function BaseLayout(props) {
 

@@ -88,6 +88,7 @@ class RecipeForm extends React.Component {
       faren: true,
       yield_amount: 1,
       yield_type: '',
+      ingredients: []
 
     }
   }
@@ -147,8 +148,9 @@ class RecipeForm extends React.Component {
     //console.log('yieldType', yieldType);
     this.setState({yield_type: yieldType });
   }
-  handleNewIngredients(model) {
-    console.log('model',model);
+  handleNewIngredients(collection) {
+    console.log('col',collection);
+    this.setState({ingredients: collection})
   }
   handleSubmitButton(e) {
     e.preventDefault();
@@ -224,7 +226,7 @@ class RecipeForm extends React.Component {
         </div>
       </div>
       <hr noshade/>
-      <IngredientInputForm handleNewIngredients={this.props.handleNewIngredients} />
+      <IngredientInputForm handleNewIngredients={this.handleNewIngredients} />
       <hr noshade/>
         <div className="form-group">
           <div className="col-sm-2">
@@ -245,13 +247,13 @@ class IngredientInputForm extends React.Component {
     this.handleNewIngredient = this.handleNewIngredient.bind(this);
     this.handleIngredientName = this.handleIngredientName.bind(this);
     this.handleIngredientUnit = this.handleIngredientUnit.bind(this);
-    this.handleNewIngredients = this.handleNewIngredients.bind(this);
+    // this.handleNewIngredients = this.handleNewIngredients.bind(this);
     this.state = {
       ingredientCollection,
       newIngredientRow: new models.Ingredient(),
       name: '',
       qty: 1,
-      units: 'cups'
+      units: 'cups',
     }
   }
   handleIngredientQauntity(e) {
@@ -271,20 +273,14 @@ class IngredientInputForm extends React.Component {
     //console.log('ingredName', ingredName);
     this.state.newIngredientRow.set({name: ingredName});
   }
-  handleNewIngredients(e) {
-    e.preventDefault();
-    this.props.handleNewIngredients({
-    name: this.state.name, qty: this.state.qty, units: this.state.units
-  });
-  }
 
   handleNewIngredient(e) {
     e.preventDefault();
     var ingredientCollection = this.state.ingredientCollection;
     ingredientCollection.add(this.state.newIngredientRow.clone());
     this.setState({ingredientCollection: ingredientCollection});
-    handleNewIngredients();
-    //console.log('INGCOLLECT', this.state.ingredientCollection );
+    this.props.handleNewIngredients(this.state.ingredientCollection);
+    console.log('INGCOLLECT', this.state.ingredientCollection );
     //return ingredientCollection;
   }
 

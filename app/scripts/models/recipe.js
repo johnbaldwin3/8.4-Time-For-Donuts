@@ -19,7 +19,8 @@ var RecipeModel = Backbone.Model.extend({
     img_url: '',
     chef_name: ''
     }
-  }
+  },
+  urlRoot:'https://jb3-serve.herokuapp.com/classes/Recipes/'
 })
 
 var RecipeCollection = Backbone.Collection.extend({
