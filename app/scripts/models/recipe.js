@@ -21,7 +21,7 @@ var RecipeModel = Backbone.Model.extend({
     }
   },
   urlRoot:'https://jb3-serve.herokuapp.com/classes/Recipes/'
-})
+});
 
 var RecipeCollection = Backbone.Collection.extend({
   model: RecipeModel,
@@ -39,14 +39,11 @@ var Ingredient = Backbone.Model.extend({
     units: '',
     qty: 1
   }
-})
+});
 
 var IngredientCollection = Backbone.Collection.extend({
   model: Ingredient
-})
-// var RecipeModelCollection = Backbone.Collection.extend({
-//   model: RecipeModel
-// })
+});
 
 module.exports = {
   RecipeModel,

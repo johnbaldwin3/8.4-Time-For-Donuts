@@ -1,8 +1,6 @@
 var React = require('react');
+var Backbone = require('backbone');
 
-function isActiveClass() {
-
-}
 
 function BaseLayout(props) {
 
@@ -23,9 +21,9 @@ function BaseLayout(props) {
            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
              <ul className="nav navbar-nav">
 
-               <li><a href="#recipe_list/">Recipe Vault</a></li>
-                <li><a href="#recipe_form/">Recipe Creator</a></li>
-                <li className="active"><a href="#app/">Serving Calculator<span className="sr-only">(current)</span></a></li>
+               <li className={activeClass('recipe_list/')}><a href="#recipe_list/">Recipe Vault</a></li>
+                <li className={activeClass('recipe_form/')}><a href="#recipe_form/">Recipe Creator</a></li>
+                <li className={activeClass('app/')}><a href="#app/">Recipe View and Serving Calculator</a></li>
              </ul>
            </div>
         </div>
@@ -41,20 +39,13 @@ function BaseLayout(props) {
 }
 
 
+function isActive (url) {
+  return Backbone.history.fragment == url;
+}
 
-
-// function Header(props) {
-//   return (
-//     <h1>Welcome Back, Chef! The Kitchen is Yours...</h1>
-//   )
-// }
-//
-// function LoginHeader(props) {
-//   return (
-//     <h1>Please Login to ChefAssist</h1>
-//   )
-// }
-
+function activeClass(url) {
+  return isActive(url) ? 'active' : '';
+}
 module.exports = {
   BaseLayout
 }

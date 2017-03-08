@@ -26,38 +26,19 @@ class RecipeListContainer extends React.Component {
   }
 
   render() {
+    return (
+      <BaseLayout>
 
-  return (
-    <div>
-      <nav className="navbar navbar-inverse navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-               <span className="sr-only">Toggle navigation</span>
-               <span className="icon-bar"></span>
-               <span className="icon-bar"></span>
-               <span className="icon-bar"></span>
-             </button>
-             <a className="navbar-brand" href="#">ChefAssist <span className="glyphicon glyphicon-cutlery"></span></a>
-           </div>
-           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-             <ul className="nav navbar-nav">
-               <li className="active"><a href="#recipe_list/">Recipe Vault<span className="sr-only">(current)</span></a></li>
-                <li><a href="#recipe_form/">Recipe Creator</a></li>
-                <li ><a href="#app/">Serving Calculator</a></li>
-             </ul>
-           </div>
-        </div>
-      </nav>
-      <div className="container">
+        <div className="container">
 
-        <div className="row">
-          <RecipeList recipeCollection={this.state.recipeCollection}/>
+          <div className="row">
+            <RecipeList recipeCollection={this.state.recipeCollection}/>
+          </div>
+
         </div>
 
-      </div>
-    </div>
-    )
+      </BaseLayout>
+      )
   }
 
 }
@@ -88,7 +69,7 @@ class RecipeList extends React.Component {
               </ul>
               <p>Prep Time: {recipe.get('prep_time')} minutes. Cook Time: {recipe.get('cook_time')} minutes.</p>
               <p> Type of Dish: {recipe.get('recipe_type')}</p>
-              <p><a href={"#app/" + recipe.get('objectId')} className="btn btn-success" role="button" value={recipe.get('objectId')}>Adjust Servings</a> <a href="#" className="btn btn-default" role="button">View Recipe</a></p>
+              <p><a href={"#app/" + recipe.get('objectId')} className="btn btn-success" role="button" value={recipe.get('objectId')}>View &amp; Adjust</a></p>
             </div>
           </div>
         </div>

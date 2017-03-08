@@ -1,5 +1,5 @@
 var React = require('react');
-//var Select = require('react-select');
+var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 var models = require('../models/recipe.js');
 
 
@@ -26,34 +26,14 @@ class RecipeFormContainer extends React.Component {
   }
   render() {
     return(
-      <div>
-        <nav className="navbar navbar-inverse navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-               <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                 <span className="sr-only">Toggle navigation</span>
-                 <span className="icon-bar"></span>
-                 <span className="icon-bar"></span>
-                 <span className="icon-bar"></span>
-               </button>
-               <a className="navbar-brand" href="#">ChefAssist <span className="glyphicon glyphicon-cutlery"></span></a>
-             </div>
-             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-               <ul className="nav navbar-nav">
-
-                 <li><a href="#recipe_list/">Recipe Vault</a></li>
-                  <li className="active" ><a href="#recipe_form/">Recipe Creator<span className="sr-only">(current)</span></a></li>
-                  <li ><a href="#app/">Serving Calculator</a></li>
-               </ul>
-             </div>
-          </div>
-        </nav>
+      <BaseLayout>
         <div className="container">
 
             <RecipeForm addNewRecipeToCollection= {this.addNewRecipeToCollection} />
 
         </div>
-      </div>
+      </BaseLayout>
+        
       )
     }
 
@@ -247,7 +227,7 @@ class IngredientInputForm extends React.Component {
     this.handleNewIngredient = this.handleNewIngredient.bind(this);
     this.handleIngredientName = this.handleIngredientName.bind(this);
     this.handleIngredientUnit = this.handleIngredientUnit.bind(this);
-    // this.handleNewIngredients = this.handleNewIngredients.bind(this);
+
     this.state = {
       ingredientCollection,
       newIngredientRow: new models.Ingredient(),
@@ -280,8 +260,7 @@ class IngredientInputForm extends React.Component {
     ingredientCollection.add(this.state.newIngredientRow.clone());
     this.setState({ingredientCollection: ingredientCollection});
     this.props.handleNewIngredients(this.state.ingredientCollection);
-    console.log('INGCOLLECT', this.state.ingredientCollection );
-    //return ingredientCollection;
+
   }
 
   render() {

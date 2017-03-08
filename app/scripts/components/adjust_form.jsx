@@ -7,14 +7,9 @@ var BaseLayout = require('./layouts/base.jsx').BaseLayout;
 class AdjustRecipeContainer extends React.Component {
   constructor(props) {
     super(props);
-    //var recipeModel = new models.RecipeModel();
-    //var recipeCollection = new models.RecipeCollection();
     var currentRecipe = new models.RecipeModel();
     currentRecipe.set('objectId', props.id);
-    //console.log('tpi', this.props.id);
     currentRecipe.fetch().then(()=> {
-      //currentRecipe = recipeCollection.findWhere({objectId: this.props.id});
-      //console.log('currentRecipe', currentRecipe);
       this.setState({currentRecipe: currentRecipe});
       this.forceUpdate();
     });
@@ -96,30 +91,20 @@ class ServingAdjusterForm extends React.Component {
   }
 }
 
-//onClick={(e)=>{e.preventDefault(); this.getMultiplier()}}
-
 class IngredientsChecklist extends React.Component {
   constructor(props) {
     super(props);
-    //console.log('tester', this.props.recipeModel.toJSON());
-    //console.log('sa', this.props.servingAdjust);
     this.state = {
       ingredients: this.props.currentRecipe.get('ingredients'),
 
     }
   }
   componentWillReceiveProps(nextProps) {
-    console.log('next', nextProps);
     this.setState({currentRecipe: nextProps.currentRecipe});
   }
 
   render() {
-    console.log('tpc', this.props.currentRecipe);
-    //var recipeJSON = this.props.currentRecipe.toJSON();
-  console.log("recpJS", this.props.currentRecipe.get('ingredients'));
-    //var recipeIngreds = recipeJSON.ingredients;
-    //console.log('recingred', recipeIngreds);
-    //console.log(recipeJSON.ingredients[0].name);
+
     var ingredientList = this.props.currentRecipe.get('ingredients').map((ingredient) =>{
       return (
         <form>
