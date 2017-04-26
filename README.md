@@ -1,7 +1,7 @@
 ## 8 4 ChefAssist
 Week 8
 ------
-Website: https://johnbaldwin3.github.io/8.4-Time-For-Donuts/#recipe_list/
+Website: https://johnbaldwin3.github.io/8.4-Time-For-Donuts/
 ------
 Using React, Backbone, JavaScript, Sass, Bootstrap - this assignment was to create cooking site that would allow users to enter their own recipes, and then adjust them depending on how many servings they intended to make.
 
